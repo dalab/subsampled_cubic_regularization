@@ -42,14 +42,13 @@ def logistic_loss(w, X, Y, alpha=1e-3):
     l = l + 0.5*  alpha * (np.linalg.norm(w) ** 2)
     return l
 
-def logistic_loss_nonconvex(w,X,Y,alpha=1e-3):
+def logistic_loss_nonconvex(w,X,Y,alpha=1e-3,beta=1):
     n = X.shape[0]
     d = X.shape[1]
-    alpha = opt['non_cvx_reg_alpha']
     z = X.dot(w)  # prediction <w, x>
     h = phi(z)
     l= - (np.dot(np.log(h),Y)+np.dot(np.ones(n)-Y,np.log(np.ones(n)-h)))/n
-    l= l + alpha*np.dot(alpha*w**2,1/(1+alpha*w**2))
+    l= l + alpha*np.dot(beta*w**2,1/(1+beta*w**2))
     return l
 
 def softmax_loss(w,X,ground_truth,alpha=1e-3,n_classes=None):
@@ -95,13 +94,13 @@ def logistic_loss_gradient(w, X, Y, alpha=1e-3):
     grad = grad + alpha * w
     return grad
 
-def logist_loss_nonconvex_gradient(w, X, Y, alpha=1e-3):
+def logist_loss_nonconvex_gradient(w, X, Y, alpha=1e-3, beta=1):
     n = X.shape[0]
     d = X.shape[1]
     z = X.dot(w)   # prediction <w, x>
     h = phi(z)
     grad= X.T.dot(h-Y)/n
-    grad = grad + alpha*np.multiply(2*alpha*w,(1+alpha*w**2)**(-2))
+    grad = grad + alpha*np.multiply(2*beta*w,(1+beta*w**2)**(-2))
     return grad
 
 def softmax_loss_gradient(w, X, ground_truth, alpha=1e-3,n_classes=None):
@@ -150,13 +149,12 @@ def logistic_loss_hessian( w, X, Y, alpha=1e-3):
     H = H + alpha * np.eye(d, d) 
     return H 
 
-def logistic_loss_nonconvex_hessian( w, X, Y, alpha=1e-3):
-    alpha = opt['non_cvx_reg_alpha']
+def logistic_loss_nonconvex_hessian( w, X, Y, alpha=1e-3,beta=1):
     z= X.dot(w)
     q=phi(z)
     h= q*(1-phi(z))
     H = np.dot(np.transpose(X),h[:, np.newaxis]* X) / n  
-    H = H + alpha * np.eye(d,d)*np.multiply(2*alpha-6*alpha**2*w**2,(alpha*w**2+1)**(-3))
+    H = H + alpha * np.eye(d,d)*np.multiply(2*beta-6*beta**2*w**2,(beta*w**2+1)**(-3))
     return H
 
 def softmax_loss_hessian( w, X, Y, alpha=1e-3,n_classes=None):
@@ -215,7 +213,7 @@ def logistic_loss_Hv(w,X, Y, v,alpha=1e-3):
     out = Hv + alpha * v
     return out
 
-def logistic_loss_nonconvex_Hv(w, X, Y, v,alpha=1e-3): 
+def logistic_loss_nonconvex_Hv(w, X, Y, v,alpha=1e-3,beta=1): 
     n = X.shape[0]
     d = X.shape[1]
     _z=X.dot(w)
@@ -223,7 +221,7 @@ def logistic_loss_nonconvex_Hv(w, X, Y, v,alpha=1e-3):
     d_binary = _z * (1 - _z)
     wa = d_binary * X.dot(v)
     Hv = X.T.dot(wa)/n
-    out = Hv + alpha *np.multiply(np.multiply(2*alpha-6*alpha**2*w**2,(alpha*w**2+1)**(-3)), v)
+    out = Hv + alpha *np.multiply(np.multiply(2*beta-6*beta**2*w**2,(beta*w**2+1)**(-3)), v)
     return out
 
 def softmax_loss_Hv(w, X, ground_truth, v, alpha=1e-30,n_classes=None):
