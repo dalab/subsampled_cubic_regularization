@@ -248,7 +248,7 @@ def solve_ARC_subproblem(grad,Hv,hessian, sigma, X, Y, w, successful_flag,lambda
         return (s,0)
    
     elif subproblem_solver=='exact':  
-        H =hessian(w,X, Y, w, **kwargs) #would be cool to memoize this. 
+        H =hessian(w,X, Y, **kwargs)
         (s, lambda_k) = exact_ARC_suproblem_solver(grad, H, sigma, exact_tol,successful_flag,lambda_k)
        
         return (s,lambda_k)
