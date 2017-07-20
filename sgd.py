@@ -2,6 +2,8 @@
 ### Stochastic Gradient Descent ###
 ###################################
 
+# This SGD implementation assumes a constant stepsize that can be specified as opt['learning_rate_sgd']= ...
+
 # Authors: Jonas Kohler and Aurelien Lucchi, 2017
 
 from datetime import datetime
@@ -35,7 +37,9 @@ def SGD(w, loss, gradient, X=None, Y=None, opt=None, **kwargs):
     for i in range(n_steps):
 
         # I: subsampling
-        int_idx=np.random.permutation(n)[0:batch_size]
+        #int_idx=np.random.permutation(n)[0:batch_size]
+        int_idx=np.random.randint(0, high=n, size=batch_size)        
+
         bool_idx = np.zeros(n,dtype=bool)
         bool_idx[int_idx]=True
         _X=np.zeros((batch_size,d))
