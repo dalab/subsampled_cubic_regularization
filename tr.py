@@ -119,7 +119,8 @@ def Trust_Region(w, loss, gradient, Hv=None, hessian=None, X=None, Y=None, opt=N
 
         ## b) draw batches ##
         if sample_size_Hessian <n:
-            int_idx_Hessian=np.random.permutation(n)[0:sample_size_Hessian]
+            int_idx_Hessian=np.random.randint(0, high=n, size=sample_size_Hessian)        
+
             bool_idx_Hessian = np.zeros(n,dtype=bool)
             bool_idx_Hessian[int_idx_Hessian]=True
             _X=np.zeros((sample_size_Hessian,d))
@@ -131,7 +132,8 @@ def Trust_Region(w, loss, gradient, Hv=None, hessian=None, X=None, Y=None, opt=N
             _Y=Y
 
         if sample_size_gradient < n:
-            int_idx_gradient=np.random.permutation(n)[0:sample_size_gradient]
+            int_idx-gradient=np.random.randint(0, high=n, size=sample_size_gradient)        
+
             bool_idx_gradient = np.zeros(n,dtype=bool)
             bool_idx_gradient[int_idx_gradient]=True
             _X2=np.zeros((sample_size_gradient,d))
