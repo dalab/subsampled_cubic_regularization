@@ -37,7 +37,6 @@ def SGD(w, loss, gradient, X=None, Y=None, opt=None, **kwargs):
     for i in range(n_steps):
 
         # I: subsampling
-        #int_idx=np.random.permutation(n)[0:batch_size]
         int_idx=np.random.randint(0, high=n, size=batch_size)        
 
         bool_idx = np.zeros(n,dtype=bool)
@@ -53,7 +52,6 @@ def SGD(w, loss, gradient, X=None, Y=None, opt=None, **kwargs):
         n_samples_seen += batch_size
         
         if (n_samples_seen >= n*k)  == True:
-            k+=1
 
             _timing=timing
             timing=(datetime.now() - start).total_seconds()
@@ -61,6 +59,7 @@ def SGD(w, loss, gradient, X=None, Y=None, opt=None, **kwargs):
             _loss = loss(w, X, Y, **kwargs)
             
             print ('Epoch ' + str(k) + ': loss = ' + str(_loss) + ' norm_grad = ' + str(np.linalg.norm(grad)), 'time=',round(timing-_timing,3))
+            k+=1
 
             timings_collector.append(timing)
             samples_collector.append((i+1)*batch_size)
