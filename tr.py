@@ -132,7 +132,7 @@ def Trust_Region(w, loss, gradient, Hv=None, hessian=None, X=None, Y=None, opt=N
             _Y=Y
 
         if sample_size_gradient < n:
-            int_idx-gradient=np.random.randint(0, high=n, size=sample_size_gradient)        
+            int_idx_gradient=np.random.randint(0, high=n, size=sample_size_gradient)        
 
             bool_idx_gradient = np.zeros(n,dtype=bool)
             bool_idx_gradient[int_idx_gradient]=True
