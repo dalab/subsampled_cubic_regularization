@@ -14,14 +14,14 @@ c) The **Subsampled Cubic Regularization (SCR)** method presented in Kohler and 
 
 You can pass any kind of continous objective (and derivatives) to these methods and choose between different common solvers for the quadratic models that are minimized in each step. In particular, a **Krylov sub-space minimization** routine based on the Lanczos process is available. This routine allows to escape *strict* saddle points efficiently. 
 
-<img src="https://picload.org/image/ricdogcr/intro.png" width="400"/>
+<img src="data/intro.png" width="400"/>
 
 Furthermore, these methods possess the best-known worst case iteration complexity bounds. Details regarding the **convergence analysis** and implementation of a sub-sampled cubic regularization method can be found in **our ICML paper**: https://arxiv.org/abs/1705.05933
 
-<img src="https://picload.org/image/ricdodwr/table.png" width="600"/>
+<img src="data/table.png" width="600"/>
 
 
 Finally, for empirical risk minimization and similar objective involving loss function over datapoints, we offer the possibility of **sub-sampling datapoints** in each iteration according to different schemes.
 
 
-<img src="https://picload.org/image/ricdccpa/samples.png" width="600"/>
+<img src="data/samples.png" width="600"/>
